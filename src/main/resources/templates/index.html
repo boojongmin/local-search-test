@@ -4,698 +4,176 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"/>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
 </head>
 <body>
-<div class="container">
-    <div class="row" style="margin-top:20px">
-        <div clas="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-            home
-        </div>
-    </div>
 
+<div id="app">
+    <b-container>
+        <b-row>
+            <b-col>
+                <b-form @submit.prevent="localSearch" inline>
+                    <b-form-group>
+                        <b-input v-model="keyword" placeholder="키워드" size="lg" />
+                    </b-form-group>
+                    &nbsp;&nbsp;&nbsp;
+                    <b-form-group>
+                        <b-button type="submit" variant="primary" size="lg">검색</b-button>
+                    </b-form-group>
+                </b-form>
+
+            </b-col>
+            <b-col>
+                <b-table stripe hover bordered :items="rankedKeywords" show-empty empty-text="검색한 키워드가 없습니다."></b-table>
+            </b-col>
+        </b-row>
+        <b-row v-if="pageCount > 0">
+            <paginate
+                v-model="page"
+                :page-count="pageCount"
+                container-class="pagination"
+                prev-class="page-link"
+                next-class="page-link"
+                prev-text="이전"
+                next-text="다음"
+                page-class="page-item"
+                page-link-class="page-link"
+                :click-handler="clickCallback">
+            </paginate>
+        </b-row>
+
+
+        <b-row v-if="pageCount > 0">
+            <b-col>
+                <b-table striped hover :fields="fields" :items="documents" @row-clicked="showDetail"> </b-table>
+            </b-col>
+            <b-col>
+                <table class="table">
+                    <tr>
+                        <th>address_name</th>
+                        <td>{{detail.address_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>category_group_code</th>
+                        <td>{{detail.category_group_code}}</td>
+                    </tr>
+                    <tr>
+                        <th>category_group_name</th>
+                        <td>{{detail.category_group_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>category_name</th>
+                        <td>{{detail.category_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>distance</th>
+                        <td>{{detail.distance}}</td>
+                    </tr>
+                    <tr>
+                        <th>id</th>
+                        <td>{{detail.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>phone</th>
+                        <td>{{detail.phone}}</td>
+                    </tr>
+                    <tr>
+                        <th>place_name</th>
+                        <td>{{detail.place_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>place_url</th>
+                        <td>{{detail.place_url}}</td>
+                    </tr>
+                    <tr>
+                        <th>road_address_name</th>
+                        <td>{{detail.road_address_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>x</th>
+                        <td>{{detail.x}}</td>
+                    </tr>
+                    <tr>
+                        <th>y</th>
+                        <td>{{detail.y}}</td>
+                    </tr>
+                </table>
+
+
+            </b-col>
+        </b-row>
+
+    </b-container>
 </div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<script src="https://unpkg.com/vuejs-paginate@latest"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script>
-//<![CDATA[
-//]]>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</script>
+<script>
+Vue.component('paginate', VuejsPaginate)
+
+
+new Vue({
+  el: '#app',
+  data: {
+    keyword: '',
+    fields: { id: { label: 'id'}, place_name: { label: '상호명' } },
+    documents: [],
+    pageCount: 0,
+    detail: {},
+    page: 1,
+    rankedKeywords: []
+  },
+  methods: {
+    localSearch: function() {
+        getLocalSearch(this, 1);
+    },
+    clickCallback: function(pageNum) {
+        getLocalSearch(this, pageNum);
+    },
+    showDetail: function(e) {
+        this.detail = e
+    }
+  },
+  mounted: function() {
+      getRankedKeywords(this);
+  }
+})
+
+function getRankedKeywords(vue) {
+    var rankedKeywordsUrl = 'http://localhost:8080/api/localsearch/keyword/rank';
+    axios.get(rankedKeywordsUrl)
+        .then(function(response) {
+            vue.rankedKeywords = response.data
+        });
+}
+
+function getLocalSearch(vue, page) {
+    if(vue.keyword == '') {
+        alert('키워드를 입력해주세요.');
+        return;
+    }
+    var localSearchUrl = 'http://localhost:8080/api/localsearch/keyword/' + vue.keyword + '/page/' + page
+    axios.get(localSearchUrl)
+        .then(function(response) {
+            vue.documents = response.data.documents
+            vue.pageCount = response.data.meta.pageable_count
+            if(vue.pageCount == 0) {
+                alert('조회된 데이터가 없습니다.');
+            }
+        })
+        .then(function() {
+            getRankedKeywords(vue)
+        });
+}
 </script>
 </body>
 </html>

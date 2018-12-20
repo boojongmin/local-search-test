@@ -4,8 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 // jpa
 @Entity
@@ -30,10 +30,10 @@ public class Member {
     @NonNull
     private String name;
 
-//    public UserDetails getUserDetails() {
-//        return User.withUsername(this.userId)
-//                .password(password)
-//                .authorities("USER")
-//                .build();
-//    }
+    public UserDetails getUserDetails() {
+        return User.withUsername(this.userId)
+                .password(password)
+                .authorities("USER")
+                .build();
+    }
 }

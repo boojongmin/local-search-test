@@ -28,20 +28,6 @@ public class LocalSearchController {
         return service.locationSearch(keyword, page);
     }
 
-    // ex: http://localhost:8080/api/localsearch/keyword/1/page/1/view/21268032
-    @GetMapping("/keyword/{keyword}/page/{page}/view/{id}")
-    public DocumentModel documentModel(@PathVariable("keyword") String keyword,
-                                       @PathVariable("page") int page,
-                                       @PathVariable("id") long id) {
-
-
-        LocationSearchModel search = service.search(keyword, page);
-        return search.getDocuments().stream()
-                .filter(x -> x.getId() == id).findFirst()
-                .orElseThrow(IllegalArgumentException::new);
-
-    }
-
     @GetMapping("/keyword/rank")
     public List<KeywordCountModel> keywordRank() {
         return service.getKeywordCount();
