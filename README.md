@@ -41,15 +41,21 @@
   - spring-data-jpa를 이용하여 entity 및 repository를 작성.
   - [Entity](https://github.com/boojm/local-search-test/blob/master/src/main/java/boojongmin/localsearch/domain/Member.java)
   - [Repository](https://github.com/boojm/local-search-test/blob/master/src/main/java/boojongmin/localsearch/repository/MemberRepository.java)
-  
+
+## 사용한 라이브러리
+#### server
+    spring, springboot, security, data-jpa, data-redis, session-data-redis, 
+    thymeleaf, hystrix, embedded-redis, h2, lombok, junit, assertj
+#### client
+    vuejs, axios, bootstrapvue, vuejs-paginate
   
 ## 실행
 - java se 11, gradle 설치 (DB와 redis는 어플리케이션에 내장)
-- gradle bootRun 
-- 브라우저 http://localhost:8080 접속(개발에는 chrome을 사용)
+- git clone https://github.com/boojm/local-search-test
+- 프로젝트 루트에서 `gradle bootRun`으로 서버 실행
+- 브라우저로 http://localhost:8080 접속
 - login form에서 아이디 user, 패스워드 password 입력
 - 지역검색 화면에서 키워드 입력후 인기 키워스 상위 및 검색 결과 노출 확인. 
-
 
 
 
